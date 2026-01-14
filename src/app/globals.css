@@ -1,0 +1,222 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-charcoal: #0a0a0a;
+  --color-charcoal-50: #1a1a1a;
+  --color-estate: #1a4d3a;
+  --color-estate-light: #2d6b52;
+  --color-estate-dark: #0f3325;
+  --color-ivory: #f5f2eb;
+  --color-ivory-50: #faf9f7;
+  --color-gold: #c9a227;
+  --color-gold-light: #e6c455;
+  --color-gold-dark: #9a7b1c;
+}
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+    overflow-x: hidden;
+  }
+  
+  body {
+    @apply bg-charcoal text-ivory font-sans antialiased;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif font-medium tracking-tight;
+  }
+
+  ::selection {
+    @apply bg-estate text-ivory;
+  }
+  
+  /* Prevent horizontal scrolling and white lines */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+}
+
+@layer components {
+  .container-estate {
+    @apply max-w-7xl mx-auto px-6 lg:px-8;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-8 py-4 text-sm font-medium tracking-wide uppercase 
+           bg-estate text-ivory rounded-none border border-estate
+           transition-all duration-300 ease-out
+           hover:bg-estate-light hover:border-estate-light
+           focus:outline-none focus:ring-2 focus:ring-estate focus:ring-offset-2 focus:ring-offset-charcoal;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-8 py-4 text-sm font-medium tracking-wide uppercase
+           bg-transparent text-ivory rounded-none border border-ivory/30
+           transition-all duration-300 ease-out
+           hover:bg-ivory/5 hover:border-ivory/50
+           focus:outline-none focus:ring-2 focus:ring-ivory/30 focus:ring-offset-2 focus:ring-offset-charcoal;
+  }
+
+  .btn-gold {
+    @apply inline-flex items-center justify-center px-8 py-4 text-sm font-medium tracking-wide uppercase
+           bg-gold text-charcoal rounded-none border border-gold
+           transition-all duration-300 ease-out
+           hover:bg-gold-light hover:border-gold-light
+           focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-charcoal;
+  }
+
+  .section-divider {
+    @apply h-px w-full bg-gradient-to-r from-transparent via-estate/30 to-transparent max-w-full;
+  }
+
+  .card-estate {
+    @apply bg-charcoal-50 border border-estate/20 p-8 
+           transition-all duration-500 ease-out
+           hover:border-estate/40 hover:bg-charcoal-100;
+  }
+
+  .text-gradient-gold {
+    @apply bg-gradient-to-r from-gold-light via-gold to-gold-dark bg-clip-text text-transparent;
+  }
+
+  .text-gradient-estate {
+    @apply bg-gradient-to-r from-estate-light via-estate to-estate-dark bg-clip-text text-transparent;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .animate-delay-100 {
+    animation-delay: 100ms;
+  }
+
+  .animate-delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .animate-delay-300 {
+    animation-delay: 300ms;
+  }
+
+  .animate-delay-400 {
+    animation-delay: 400ms;
+  }
+
+  .animate-delay-500 {
+    animation-delay: 500ms;
+  }
+
+  .animate-delay-600 {
+    animation-delay: 600ms;
+  }
+
+  .animate-delay-700 {
+    animation-delay: 700ms;
+  }
+
+  .animate-delay-800 {
+    animation-delay: 800ms;
+  }
+
+  .mask-radial {
+    mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+  }
+
+  .mask-fade-bottom {
+    mask-image: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-charcoal);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-estate);
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-estate-light);
+}
+
+/* Smooth animations for page transitions */
+.page-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms ease-out, transform 300ms ease-out;
+}
+
+/* Vault card specific styles */
+.vault-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.vault-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-estate), transparent);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.vault-card:hover::before {
+  opacity: 1;
+}
+
+/* Decorative background pattern */
+.bg-estate-pattern {
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(26, 77, 58, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(201, 162, 39, 0.05) 0%, transparent 50%);
+}
+
+/* Flow diagram connector lines */
+.flow-connector {
+  position: relative;
+}
+
+.flow-connector::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -2rem;
+  width: 4rem;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-estate), transparent);
+}
+
+@media (max-width: 768px) {
+  .flow-connector::after {
+    top: auto;
+    bottom: -2rem;
+    right: 50%;
+    width: 2px;
+    height: 4rem;
+    background: linear-gradient(180deg, var(--color-estate), transparent);
+  }
+}
