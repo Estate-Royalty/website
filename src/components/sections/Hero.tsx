@@ -129,21 +129,21 @@ export default function Hero() {
             No complexity. No operational headaches. Just cash flow.
           </motion.p>
 
-          {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="flex flex-col sm:flex-row gap-4 mb-16"
-          >
-            <Link href="/#bahari" className="btn-gold text-lg px-10 py-5 group">
-              Get $BAHARI
-              <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
-            </Link>
-            <Link href="/vaults" className="btn-secondary text-lg px-10 py-5">
-              Explore Vaults
-            </Link>
-          </motion.div>
+            {/* CTA Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="flex flex-col sm:flex-row gap-4 mb-16"
+            >
+              <Link href="/waitlist" className="btn-gold text-lg px-10 py-5 group">
+                Join Waitlist
+                <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
+              </Link>
+              <Link href="/vaults" className="btn-secondary text-lg px-10 py-5">
+                Explore Vaults
+              </Link>
+            </motion.div>
 
           {/* Stats Row */}
           <motion.div

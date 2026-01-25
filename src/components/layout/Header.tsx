@@ -20,6 +20,7 @@ const navigation = [
   { name: 'Markets', href: '/#markets' },
   { name: 'Security', href: '/#security' },
   { name: 'Research', href: '/research' },
+  { name: 'Tokenize Property', href: '/tokenize' },
 ]
 
 export default function Header() {

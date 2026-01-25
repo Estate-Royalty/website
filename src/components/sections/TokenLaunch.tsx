@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import Link from 'next/link'
 import { MapPin, Coins, Calendar, ArrowRight } from 'lucide-react'
 
 export default function TokenLaunch() {
@@ -155,10 +156,10 @@ export default function TokenLaunch() {
             </div>
 
             {/* CTA */}
-            <button className="w-full btn-gold group">
+            <Link href="/waitlist" className="w-full btn-gold group inline-flex justify-center">
               Join Waitlist for $BAHARI
               <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </button>
+            </Link>
           </motion.div>
         </div>
 

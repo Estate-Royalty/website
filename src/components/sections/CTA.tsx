@@ -61,8 +61,8 @@ export default function CTA() {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/#bahari" className="btn-gold group">
-              Get $BAHARI Tokens
+            <Link href="/waitlist" className="btn-gold group">
+              Join Waitlist
               <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
             </Link>
             <Link href="/vaults" className="btn-secondary">

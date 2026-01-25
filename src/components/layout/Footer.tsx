@@ -8,6 +8,7 @@ const footerLinks = {
     { name: 'Vaults', href: '/vaults' },
     { name: 'Markets', href: '/#markets' },
     { name: 'Security', href: '/#security' },
+    { name: 'Tokenize Property', href: '/tokenize' },
   ],
   resources: [
     { name: 'Research', href: '/research' },
