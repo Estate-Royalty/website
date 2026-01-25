@@ -67,18 +67,33 @@ export default function AdminPage() {
   const fetchSubmissions = async () => {
     try {
       setLoading(true)
+      setError(null)
       const response = await fetch('/api/submissions')
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      
       const data = await response.json()
+      console.log('Submissions API response:', data)
       
       if (data.success) {
-        setAssessments(data.assessments.data)
-        setWaitlist(data.waitlist.data)
+        const assessmentsData = data.assessments?.data || data.assessments || []
+        const waitlistData = data.waitlist?.data || data.waitlist || []
+        
+        console.log('Assessments:', assessmentsData.length, assessmentsData)
+        console.log('Waitlist:', waitlistData.length, waitlistData)
+        
+        setAssessments(Array.isArray(assessmentsData) ? assessmentsData : [])
+        setWaitlist(Array.isArray(waitlistData) ? waitlistData : [])
         setError(null)
       } else {
         setError(data.error || 'Failed to fetch submissions')
+        console.error('API returned error:', data)
       }
     } catch (err: any) {
-      setError(err.message)
+      console.error('Fetch submissions error:', err)
+      setError(err.message || 'Failed to fetch submissions')
     } finally {
       setLoading(false)
     }
@@ -230,6 +245,8 @@ export default function AdminPage() {
         setAssessments([])
         setWaitlist([])
         setShowClearConfirm(false)
+        // Refresh to confirm
+        await fetchSubmissions()
         alert('Database cleared successfully')
       } else {
         alert('Failed to clear database: ' + data.error)
@@ -382,7 +399,14 @@ export default function AdminPage() {
         {/* Error State */}
         {error && (
           <div className="bg-red-500/10 border border-red-500/30 p-4 mb-6">
-            <p className="text-red-400 text-sm">{error}</p>
+            <p className="text-red-400 font-medium mb-1">Error loading submissions</p>
+            <p className="text-red-300/80 text-sm mb-3">{error}</p>
+            <button
+              onClick={fetchSubmissions}
+              className="text-sm text-red-400 hover:text-red-300 underline"
+            >
+              Click to retry
+            </button>
           </div>
         )}
 

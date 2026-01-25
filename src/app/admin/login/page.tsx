@@ -92,7 +92,7 @@ export default function AdminLogin() {
                 Admin Access
               </h1>
               <p className="text-ivory/50 text-sm">
-                Enter OTP sent to admin phone number
+                Enter admin password to access the dashboard
               </p>
             </div>
 
