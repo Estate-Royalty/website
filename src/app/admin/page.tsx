@@ -68,7 +68,13 @@ export default function AdminPage() {
     try {
       setLoading(true)
       setError(null)
-      const response = await fetch('/api/submissions')
+      // Add cache-busting timestamp to prevent 304 responses
+      const response = await fetch(`/api/submissions?t=${Date.now()}`, {
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache',
+        }
+      })
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`)
@@ -83,12 +89,17 @@ export default function AdminPage() {
         
         console.log('Assessments:', assessmentsData.length, assessmentsData)
         console.log('Waitlist:', waitlistData.length, waitlistData)
+        if (data.dbInfo) {
+          console.log('Database info:', data.dbInfo)
+        }
         
         setAssessments(Array.isArray(assessmentsData) ? assessmentsData : [])
         setWaitlist(Array.isArray(waitlistData) ? waitlistData : [])
         setError(null)
       } else {
-        setError(data.error || 'Failed to fetch submissions')
+        const errorMsg = data.error || 'Failed to fetch submissions'
+        const hint = data.hint ? `\n\n${data.hint}` : ''
+        setError(errorMsg + hint)
         console.error('API returned error:', data)
       }
     } catch (err: any) {
@@ -247,12 +258,18 @@ export default function AdminPage() {
         setShowClearConfirm(false)
         // Refresh to confirm
         await fetchSubmissions()
-        alert('Database cleared successfully')
+        const deletedCount = data.deleted ? 
+          `Deleted ${data.deleted.assessments + data.deleted.waitlist} records` : 
+          ''
+        alert(`Database cleared successfully. ${deletedCount}`)
       } else {
-        alert('Failed to clear database: ' + data.error)
+        const errorMsg = data.error || 'Unknown error'
+        const details = data.details ? `\n\nDetails: ${data.details}` : ''
+        alert(`Failed to clear database:\n${errorMsg}${details}`)
       }
     } catch (err: any) {
-      alert('Error clearing database: ' + err.message)
+      console.error('Clear DB error:', err)
+      alert('Error clearing database: ' + (err.message || 'Unknown error'))
     } finally {
       setClearing(false)
       setShowClearConfirm(false)
@@ -425,9 +442,20 @@ export default function AdminPage() {
               <div className="p-12 text-center">
                 <Users className="w-12 h-12 text-ivory/30 mx-auto mb-4" />
                 <p className="text-xl text-ivory/50 mb-2">No submissions found</p>
-                <p className="text-ivory/40">
+                <p className="text-ivory/40 mb-4">
                   {searchQuery ? 'Try a different search term' : 'No data available yet'}
                 </p>
+                {!searchQuery && (
+                  <div className="text-ivory/30 text-sm max-w-md mx-auto text-left">
+                    <p className="mb-2 font-medium">If you expected to see data:</p>
+                    <ul className="space-y-1 list-disc list-inside">
+                      <li>Check that DATABASE_URL is set in .env.local</li>
+                      <li>Verify you're connected to the correct database</li>
+                      <li>Make sure the database tables exist (run database/schema.sql)</li>
+                      <li>Local and production use different databases</li>
+                    </ul>
+                  </div>
+                )}
               </div>
             ) : (
               <div className="overflow-x-auto" style={{ maxHeight: 'calc(100vh - 300px)' }}>
